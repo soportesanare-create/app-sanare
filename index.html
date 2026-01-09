@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Sanaré | App (UI demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="device">
+    <!-- iOS-like status bar -->
+    <div class="statusbar">
+      <div class="sb-left"><span id="sbTime">11:11</span></div>
+      <div class="sb-center"></div>
+      <div class="sb-right">
+        <span class="sb-pill">5G</span>
+        <span class="sb-battery"><i></i></span>
+      </div>
+    </div>
+
+    <!-- App -->
+    <main class="app" id="app">
+      <!-- Login -->
+      <section class="screen screen--active" data-screen="login">
+        <div class="login-hero">
+          <div class="brand">
+            <img src="assets/logo-sanare.png" alt="Sanaré" class="brand-mark" />
+            <div class="brand-text">
+              <div class="brand-name">Sanaré</div>
+              <div class="brand-sub">Salud • Infusión • Atención humana</div>
+            </div>
+          </div>
+
+          <div class="login-card">
+            <h1>Bienvenido</h1>
+            <p>Accede para ver noticias, sedes, comisiones y puntos.</p>
+
+            <label class="field">
+              <span>Correo</span>
+              <input id="loginEmail" type="email" placeholder="correo@ejemplo.com" autocomplete="email" />
+            </label>
+
+            <label class="field">
+              <span>Contraseña</span>
+              <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password" />
+            </label>
+
+            <button class="btn btn--primary" id="loginBtn">
+              <span>Iniciar sesión</span>
+              <i class="chev"></i>
+            </button>
+
+            <div class="login-row">
+              <button class="btn btn--ghost" id="demoDoctorBtn">Entrar como Médico</button>
+              <button class="btn btn--ghost" id="demoKAMBtn">Entrar como KAM</button>
+            </div>
+
+            <div class="login-note">
+              UI demo (sin backend). Los datos son ejemplo.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Home -->
+      <section class="screen" data-screen="home">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="avatar" id="openProfile">
+              <img id="avatarImg" src="assets/avatar_doctor.svg" alt="Perfil">
+            </button>
+            <div class="hello">
+              <div class="hello-kicker">Hola,</div>
+              <div class="hello-name" id="helloName">Dr. Alejandro</div>
+            </div>
+          </div>
+          <div class="topbar-right">
+            <button class="iconbtn" id="openInbox" aria-label="Notificaciones">
+              <img src="assets/ic_bell.svg" alt="" />
+              <span class="badge" id="notifBadge">3</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="content">
+          <div class="section-head">
+            <h2>Destacados</h2>
+            <button class="link" id="shuffleHighlights">Actualizar</button>
+          </div>
+
+          <div class="carousel" id="carousel">
+            <div class="carousel-track" id="carouselTrack"></div>
+            <div class="carousel-dots" id="carouselDots"></div>
+          </div>
+
+          <div class="quick-grid">
+            <button class="quick" data-nav="sedes">
+              <img src="assets/ic_pin.svg" alt="" />
+              <div>
+                <div class="quick-title">Sedes</div>
+                <div class="quick-sub">Ubicaciones & horarios</div>
+              </div>
+              <i class="chev"></i>
+            </button>
+
+            <button class="quick" data-nav="rewards">
+              <img src="assets/ic_star.svg" alt="" />
+              <div>
+                <div class="quick-title">Puntos</div>
+                <div class="quick-sub">Beneficios médicos</div>
+              </div>
+              <i class="chev"></i>
+            </button>
+
+            <button class="quick" data-nav="commissions">
+              <img src="assets/ic_wallet.svg" alt="" />
+              <div>
+                <div class="quick-title">Comisiones</div>
+                <div class="quick-sub">Resumen del mes</div>
+              </div>
+              <i class="chev"></i>
+            </button>
+
+            <button class="quick" data-nav="profile">
+              <img src="assets/ic_user.svg" alt="" />
+              <div>
+                <div class="quick-title">Perfil</div>
+                <div class="quick-sub">Datos & preferencias</div>
+              </div>
+              <i class="chev"></i>
+            </button>
+
+            <button class="quick quick--wide" data-nav="health">
+              <img src="assets/ic_health.svg" alt="" />
+              <div>
+                <div class="quick-title">Lectura de salud</div>
+                <div class="quick-sub">Presión, glucosa y signos en tiempo real</div>
+              </div>
+              <i class="chev"></i>
+            </button>
+          </div>
+
+          <div class="section-head" style="margin-top: 18px;">
+            <h2>Noticias</h2>
+            <button class="link" data-nav="news">Ver todo</button>
+          </div>
+
+          <div class="feed" id="newsFeed"></div>
+        </div>
+      </section>
+
+      <!-- News -->
+      <section class="screen" data-screen="news">
+        <header class="subbar">
+          <button class="back" data-back>
+            <i class="chev-left"></i>
+            <span>Inicio</span>
+          </button>
+          <div class="subbar-title">Noticias</div>
+          <button class="iconbtn" id="filterNews" aria-label="Filtrar">
+            <img src="assets/ic_filter.svg" alt="" />
+          </button>
+        </header>
+
+        <div class="content">
+          <div class="chips" id="newsChips"></div>
+          <div class="feed" id="newsAll"></div>
+        </div>
+      </section>
+
+      <!-- Sedes -->
+      <section class="screen" data-screen="sedes">
+        <header class="subbar">
+          <button class="back" data-back>
+            <i class="chev-left"></i>
+            <span>Inicio</span>
+          </button>
+          <div class="subbar-title">Sedes</div>
+          <button class="iconbtn" id="openMap" aria-label="Mapa">
+            <img src="assets/ic_map.svg" alt="" />
+          </button>
+        </header>
+
+        <div class="content">
+          <div class="map-card">
+            <div class="map-illus">
+              <img src="assets/map_placeholder.svg" alt="Mapa" />
+            </div>
+            <div class="map-meta">
+              <div class="map-title">Encuentra tu sede más cercana</div>
+              <div class="map-sub">CDMX • Edomex • Querétaro • Guadalajara</div>
+            </div>
+          </div>
+
+          <div class="section-head" style="margin-top: 16px;">
+            <h2>Listado</h2>
+            <button class="link" id="sortSedes">Ordenar</button>
+          </div>
+
+          <div class="list" id="sedesList"></div>
+        </div>
+      </section>
+
+      <!-- Rewards -->
+      <section class="screen" data-screen="rewards">
+        <header class="subbar">
+          <button class="back" data-back>
+            <i class="chev-left"></i>
+            <span>Inicio</span>
+          </button>
+          <div class="subbar-title">Puntos</div>
+          <button class="iconbtn" id="redeemBtn" aria-label="Canjear">
+            <img src="assets/ic_gift.svg" alt="" />
+          </button>
+        </header>
+
+        <div class="content">
+          <div class="hero-card">
+            <div class="hero-left">
+              <div class="hero-kicker">Balance</div>
+              <div class="hero-value" id="pointsBalance">18,450</div>
+              <div class="hero-sub">Puntos Sanaré</div>
+            </div>
+            <div class="hero-right">
+              <svg width="96" height="96" viewBox="0 0 120 120" class="ring" aria-hidden="true">
+                <circle cx="60" cy="60" r="46" class="ring-bg" />
+                <circle cx="60" cy="60" r="46" class="ring-fg" id="ringFg" />
+              </svg>
+              <div class="ring-label" id="ringLabel">74%</div>
+            </div>
+          </div>
+
+          <div class="section-head" style="margin-top: 14px;">
+            <h2>Cómo ganas puntos</h2>
+            <button class="link" id="toggleRules">Reglas</button>
+          </div>
+
+          <div class="grid-cards">
+            <div class="mini-card">
+              <img src="assets/illus_referral.svg" alt="" />
+              <div class="mini-title">Referencia</div>
+              <div class="mini-sub">+500 por paciente</div>
+            </div>
+            <div class="mini-card">
+              <img src="assets/illus_followup.svg" alt="" />
+              <div class="mini-title">Seguimiento</div>
+              <div class="mini-sub">+200 por ciclo</div>
+            </div>
+            <div class="mini-card">
+              <img src="assets/illus_training.svg" alt="" />
+              <div class="mini-title">Capacitación</div>
+              <div class="mini-sub">+300 por sesión</div>
+            </div>
+          </div>
+
+          <div class="section-head" style="margin-top: 14px;">
+            <h2>Actividad reciente</h2>
+            <button class="link" id="refreshPoints">Actualizar</button>
+          </div>
+
+          <div class="timeline" id="pointsTimeline"></div>
+        </div>
+      </section>
+
+      
+      <!-- Health -->
+      <section class="screen" data-screen="health">
+        <header class="subbar">
+          <button class="back" data-back>
+            <i class="chev-left"></i>
+          </button>
+          <div class="subbar-title">Lectura de salud</div>
+          <button class="pill" id="healthConnectBtn">Conectar</button>
+        </header>
+
+        <div class="content">
+          <div class="section-head">
+            <h2>Signos en tiempo real</h2>
+            <div class="meta-time" id="healthLast">Sin conexión</div>
+          </div>
+
+          <div class="health-grid" id="healthGrid"></div>
+
+          <div class="card" style="margin-top: 14px;">
+            <div class="card-inner" style="align-items:flex-start;">
+              <div class="avatar avatar--soft">
+                <img src="assets/ic_health.svg" alt="" />
+              </div>
+              <div style="flex:1;">
+                <div class="card-title">Conectar pulsera</div>
+                <p class="event-sub" style="margin-top:6px;">
+                  Esta demo simula lecturas. En producción se conecta por <b>Bluetooth</b> (Web Bluetooth / app nativa) o por <b>API</b> del fabricante para recibir datos en tiempo real.
+                </p>
+                <div class="row" style="margin-top:10px;">
+                  <button class="btn btn--primary" id="healthSimBtn">Simular en vivo</button>
+                  <button class="btn btn--ghost" id="healthHowBtn">¿Cómo se integra?</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-space"></div>
+        </div>
+      </section>
+
+<!-- Commissions -->
+      <section class="screen" data-screen="commissions">
+        <header class="subbar">
+          <button class="back" data-back>
+            <i class="chev-left"></i>
+            <span>Inicio</span>
+          </button>
+          <div class="subbar-title">Comisiones</div>
+          <button class="iconbtn" id="exportComms" aria-label="Exportar">
+            <img src="assets/ic_download.svg" alt="" />
+          </button>
+        </header>
+
+        <div class="content">
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="kpi-label">Mes actual</div>
+              <div class="kpi-value" id="commMonth">$42,300</div>
+              <div class="kpi-sub">MXN</div>
+            </div>
+            <div class="kpi kpi--soft">
+              <div class="kpi-label">Pacientes</div>
+              <div class="kpi-value" id="commPatients">17</div>
+              <div class="kpi-sub">registrados</div>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-head">
+              <div>
+                <div class="chart-title">Rendimiento (4 semanas)</div>
+                <div class="chart-sub">Estimado basado en referencias</div>
+              </div>
+              <button class="pill" id="toggleChart">Semanal</button>
+            </div>
+            <canvas id="barChart" width="320" height="180" aria-label="Gráfica" role="img"></canvas>
+          </div>
+
+          <div class="section-head" style="margin-top: 14px;">
+            <h2>Top médicos (puntos)</h2>
+            <button class="link" id="shuffleTop">Actualizar</button>
+          </div>
+
+          <div class="leaderboard" id="leaderboard"></div>
+        </div>
+      </section>
+
+      <!-- Profile -->
+      <section class="screen" data-screen="profile">
+        <header class="subbar">
+          <button class="back" data-back>
+            <i class="chev-left"></i>
+            <span>Inicio</span>
+          </button>
+          <div class="subbar-title">Perfil</div>
+          <button class="iconbtn" id="logoutBtn" aria-label="Salir">
+            <img src="assets/ic_logout.svg" alt="" />
+          </button>
+        </header>
+
+        <div class="content">
+          <div class="profile-card">
+            <div class="profile-left">
+              <div class="profile-avatar">
+                <img id="profileAvatar" src="assets/avatar_doctor.svg" alt="Avatar" />
+              </div>
+              <div>
+                <div class="profile-name" id="profileName">Dr. Alejandro Torres</div>
+                <div class="profile-role" id="profileRole">Médico referente</div>
+              </div>
+            </div>
+            <div class="profile-right">
+              <div class="pill pill--status" id="profileStatus">Activo</div>
+            </div>
+          </div>
+
+          <div class="settings">
+            <div class="setting">
+              <div class="setting-left">
+                <img src="assets/ic_id.svg" alt="" />
+                <div>
+                  <div class="setting-title">ID Sanaré</div>
+                  <div class="setting-sub" id="profileId">SN-204-9921</div>
+                </div>
+              </div>
+              <button class="link" id="copyId">Copiar</button>
+            </div>
+
+            <div class="setting">
+              <div class="setting-left">
+                <img src="assets/ic_phone.svg" alt="" />
+                <div>
+                  <div class="setting-title">Teléfono</div>
+                  <div class="setting-sub" id="profilePhone">+52 55 0000 0000</div>
+                </div>
+              </div>
+              <button class="link">Editar</button>
+            </div>
+
+            <div class="setting">
+              <div class="setting-left">
+                <img src="assets/ic_mail.svg" alt="" />
+                <div>
+                  <div class="setting-title">Correo</div>
+                  <div class="setting-sub" id="profileEmail">doctor@sanare.com</div>
+                </div>
+              </div>
+              <button class="link">Editar</button>
+            </div>
+
+            <div class="setting">
+              <div class="setting-left">
+                <img src="assets/ic_shield.svg" alt="" />
+                <div>
+                  <div class="setting-title">Privacidad</div>
+                  <div class="setting-sub">Permisos & seguridad</div>
+                </div>
+              </div>
+              <button class="link">Abrir</button>
+            </div>
+
+            <div class="setting">
+              <div class="setting-left">
+                <img src="assets/ic_palette.svg" alt="" />
+                <div>
+                  <div class="setting-title">Tema</div>
+                  <div class="setting-sub">Claro</div>
+                </div>
+              </div>
+              <button class="pill" id="toggleTheme">Cambiar</button>
+            </div>
+          </div>
+
+          <div class="footer-space"></div>
+        </div>
+      </section>
+
+      <!-- Bottom Nav -->
+      <nav class="bottomnav" id="bottomnav" aria-label="Navegación">
+        <button class="tab tab--active" data-nav="home">
+          <img src="assets/tab_home.svg" alt="" />
+          <span>Inicio</span>
+        </button>
+        <button class="tab" data-nav="sedes">
+          <img src="assets/tab_sedes.svg" alt="" />
+          <span>Sedes</span>
+        </button>
+        <button class="tab" data-nav="rewards">
+          <img src="assets/tab_points.svg" alt="" />
+          <span>Puntos</span>
+        </button>
+        <button class="tab" data-nav="health">
+          <img src="assets/tab_health.svg" alt="" />
+          <span>Salud</span>
+        </button>
+
+        <button class="tab" data-nav="profile">
+          <img src="assets/tab_profile.svg" alt="" />
+          <span>Perfil</span>
+        </button>
+      </nav>
+
+      <!-- Toast -->
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+      <!-- Sheet (simple modal) -->
+      <div class="sheet" id="sheet" aria-hidden="true">
+        <div class="sheet-backdrop" data-close></div>
+        <div class="sheet-panel" role="dialog" aria-modal="true" aria-label="Detalle">
+          <div class="sheet-grab"></div>
+          <div class="sheet-title" id="sheetTitle">Detalle</div>
+          <div class="sheet-body" id="sheetBody"></div>
+          <button class="btn btn--primary" data-close style="margin-top: 12px;">Cerrar</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
